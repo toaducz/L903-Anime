@@ -1,0 +1,38 @@
+.page {
+  padding: 16px 16px 96px 16px;
+}
+
+.custom-page {
+  padding: 16px 16px 7px 16px;
+}
+
+.section-container {
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.zaui-list-item {
+  cursor: pointer;
+}
+
+:root {
+  --zaui-light-bottom-navigation-active-color: #ff734c;
+}
+.zaui-tabs-tabbar-active-line {
+  background-color: #ff734c;
+}
+
+.zaui-radio-checked .zaui-radio-checkmark {
+  background-color: #ff734c;
+}
+
+.custom-container {
+  background: #ff734c;
+  color: white;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  padding: 16px;
+  width: 95%;
+}
