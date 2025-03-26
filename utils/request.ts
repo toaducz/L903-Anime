@@ -9,12 +9,12 @@ export async function request<T, P = any>(
 ): Promise<T | null> {
 
   const options: RequestInit = {
-    method,
+    // method,
     // credentials: 'include',
     // mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
-      accept: 'application/json',
+      accept: '*/*',
       ...headers
     }
   }

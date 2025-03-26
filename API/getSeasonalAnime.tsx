@@ -57,9 +57,26 @@ type SeasonalRequest = {
     page?: number
 }
 
-export const getSeasonalAnime = ({ year, season, page }:SeasonalRequest) => {
+export const getSeasonalAnimeNow = () => {
   return useInfiniteQuery({
-    queryKey: ['get-seasonal-anime', year, season, page],
+    queryKey: ['get-seasonal-anime'],
+    queryFn: ({pageParam = 1}) =>
+      request<SeasonalAnimes>(`seasons/now`, 'GET',{
+        page: pageParam,
+        filter: "tv",
+        sfw: ""
+      }),
+    initialPageParam: 1,
+    staleTime: 1000 * 60 * 60,
+    refetchOnWindowFocus: false,
+    getNextPageParam: lastPage => (lastPage?.pagination.has_next_page ? lastPage?.pagination.current_page + 1 : null),
+  })
+}
+
+
+export const useSeasonalAnime = ({ year, season, page }:SeasonalRequest) => {
+  return useInfiniteQuery({
+    queryKey: ['use-seasonal-anime', year, season],
     queryFn: ({pageParam = 1}) =>
       request<SeasonalAnimes>(`seasons/${year}/${season}`, 'GET',{
         page: pageParam,
@@ -68,6 +85,7 @@ export const getSeasonalAnime = ({ year, season, page }:SeasonalRequest) => {
       }),
     initialPageParam: 1,
     staleTime: 1000 * 60 * 60,
+    refetchOnWindowFocus: false,
     getNextPageParam: lastPage => (lastPage?.pagination.has_next_page ? lastPage?.pagination.current_page + 1 : null),
   })
 }

@@ -1,4 +1,4 @@
-import type { PropsWithChildren, ReactElement } from 'react';
+import type { PropsWithChildren } from 'react';
 import { StyleSheet } from 'react-native';
 import Animated, {
   interpolate,
@@ -6,27 +6,27 @@ import Animated, {
   useAnimatedStyle,
   useScrollViewOffset,
 } from 'react-native-reanimated';
+import WebView from 'react-native-webview'; // Dùng WebView để nhúng URL embed
 
 import { ThemedView } from '@/components/ThemedView';
 import { useBottomTabOverflow } from '@/components/ui/TabBarBackground';
-import { useColorScheme } from '@/hooks/useColorScheme';
 
-const HEADER_HEIGHT = 150;
+const HEADER_HEIGHT = 230;
 
 type Props = PropsWithChildren<{
-  headerImage: ReactElement;
-  headerBackgroundColor: { light: string };
+  headerYoutubeEmbedUrl: string;
+  headerBackgroundColor: string;
 }>;
 
-export default function ParallaxScrollView({
+export default function CustomParallaxScrollView({
   children,
-  headerImage,
+  headerYoutubeEmbedUrl,
   headerBackgroundColor,
 }: Props) {
-  const colorScheme = '#f5f5f5';
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
   const bottom = useBottomTabOverflow();
+
   const headerAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -54,10 +54,16 @@ export default function ParallaxScrollView({
         <Animated.View
           style={[
             styles.header,
-            { backgroundColor: '#f5f5f5' },
+            { backgroundColor: headerBackgroundColor },
             headerAnimatedStyle,
           ]}>
-          {headerImage}
+          <WebView
+            source={{ uri: headerYoutubeEmbedUrl }} // Dùng trực tiếp URL embed
+            style={styles.webview}
+            javaScriptEnabled={true}
+            allowsFullscreenVideo={true}
+            // mediaPlaybackRequiresUserAction={false}
+          />
         </Animated.View>
         <ThemedView style={styles.content}>{children}</ThemedView>
       </Animated.ScrollView>
@@ -68,16 +74,21 @@ export default function ParallaxScrollView({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
   },
   header: {
     height: HEADER_HEIGHT,
     overflow: 'hidden',
-    
+  },
+  webview: {
+    width: '100%',
+    height: HEADER_HEIGHT,
   },
   content: {
     flex: 1,
     padding: 19,
     gap: 16,
     overflow: 'hidden',
+    backgroundColor: '#F2EFE7',
   },
 });

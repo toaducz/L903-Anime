@@ -29,13 +29,15 @@ export default function RootLayout() {
   if (!loaded) {
     return null;
   }
+  
 
   return (
     <QueryClientProvider client={queryClient}>
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
+        <Stack.Screen name="anime-detail" options={{ title: 'Chi tiết Anime' }} />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>

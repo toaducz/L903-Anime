@@ -1,18 +1,15 @@
 import { Image, StyleSheet, Platform, Text, View, ActivityIndicator, FlatList } from 'react-native';
-import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { Box, Grid, Spinner, Center } from 'zmp-ui'
-import { useQuery } from '@tanstack/react-query';
-import { getSeasonalAnime } from '@/API/getSeasonalAnime'
+import { getSeasonalAnimeNow, useSeasonalAnime } from '@/API/getSeasonalAnime'
 import { useEffect, useState, useCallback } from 'react';
-import AnimeItem from '@/components/HomePage/anime-item';
-import { Seasonal } from '@/API/getSeasonalAnime';
+import AnimeItem from '@/components/anime/anime-item';
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from 'expo-router';
 
 export default function HomeScreen() {
-
-  const { data: season, isLoading, fetchNextPage, isFetchingNextPage } = getSeasonalAnime({ year: "2025", season: "winter", page: 1 })
+   const router = useRouter()
+  const { data: season, isLoading, fetchNextPage, isFetchingNextPage, hasNextPage } = getSeasonalAnimeNow()
 
   if (isLoading) {
     return (
@@ -22,38 +19,43 @@ export default function HomeScreen() {
     );
   }
 
-  let allAnime = season?.pages.flatMap((page) => page?.data) || [];
-
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/pekora-sad.jpg')}
-          style={{ width: "auto", height: "200%", justifyContent: 'center' }}
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#121212"  }}>
+      <ParallaxScrollView
+        headerBackgroundColor={{ light: '#A1CEDC' }}
+        headerImage={
+          <Image
+            source={require('@/assets/images/logo.png')}
+            style={{ width: "auto", height: "200%", justifyContent: 'center' }}
+          />
+        }>
+        <ThemedView >
+          <Text style={[styles.horizontal, styles.title]}>Anime mới mùa này!</Text>
+        </ThemedView>
+
+        <FlatList
+          endFillColor={'default'}
+          data={season?.pages.flatMap((page) => page?.data)}
+          numColumns={2}
+          renderItem={({ item }) => <AnimeItem season={item!} onPress={() => router.push({ pathname: '/anime-detail', params: { mal_id: item?.mal_id } })} />}
+          keyExtractor={(item) => item!.mal_id}
+          onEndReached={() => {
+            if (hasNextPage && !isFetchingNextPage) {
+              fetchNextPage();
+            }
+          }}
+          onEndReachedThreshold={0.1}
+          style={styles.flatList}
+          ListFooterComponent={
+            isFetchingNextPage ? (
+              <ActivityIndicator size="large" style={[styles.container, styles.horizontal]} />
+            ) : null
+          }
+          initialNumToRender={10}
         />
-      }>
-      <ThemedView >
-        <Center intrinsic><Text style={[styles.horizontal]}>Anime mới mùa này!</Text></Center>
-      </ThemedView>
 
-      <FlatList
-        data={allAnime}
-        numColumns={2}
-        renderItem={({ item }) => <AnimeItem season={item} />}
-        keyExtractor={(item) => item.mal_id.toString()}
-        onEndReached={() => fetchNextPage()}
-        onEndReachedThreshold={0.8}
-        style={styles.flatList}
-        ListFooterComponent={
-          isFetchingNextPage ? (
-            <ActivityIndicator size="large" style={[styles.container, styles.horizontal]} />
-          ) : null
-        }
-        initialNumToRender={10}
-      />
-
-    </ParallaxScrollView>
+      </ParallaxScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -85,11 +87,14 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   title: {
-    fontSize: 16,
+    fontSize: 24,
+    color: "black",
+    textAlign: 'center'
   },
   container: {
     flex: 1,
     justifyContent: 'center',
+    fontWeight: 'heavy'
   },
   horizontal: {
     flexDirection: 'row',
@@ -100,6 +105,13 @@ const styles = StyleSheet.create({
   },
   flatList: {
     flex: 1,
+    backgroundColor: 'white',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    textShadowRadius: 1
   },
 });
 
