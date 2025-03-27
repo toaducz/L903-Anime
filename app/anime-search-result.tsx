@@ -3,7 +3,7 @@ import { StyleSheet, ActivityIndicator, FlatList, View, TextInput, Text } from '
 import { Picker } from '@react-native-picker/picker';
 import { useLocalSearchParams } from 'expo-router';
 import AnimeItem from '@/components/anime/anime-item';
-import { SafeAreaView } from "react-native-safe-area-context";
+// import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from 'expo-router';
 import Loading from '@/components/loading/loading';
 import { useSearchAnime } from '@/API/getAnimeSearch';
@@ -32,7 +32,7 @@ export default function SearchResultScreen() {
             <View style={styles.container}>
                 <View style={styles.selectorContainer}>
                     <View style={styles.pickerWrapper}>
-                        <Text style={styles.label}>Filter:</Text>
+                        <Text style={styles.label}>Lọc:</Text>
                         <Picker
                             selectedValue={orderBy}
                             onValueChange={(itemValue) => setOrderBy(itemValue)}
@@ -80,10 +80,9 @@ export default function SearchResultScreen() {
                     }
                     initialNumToRender={10}
                 />)
-
+                
                 }
-                <View style={{ paddingBottom:100 }}></View>
-
+                
             </View>
         </View>
     );

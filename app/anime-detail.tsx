@@ -24,7 +24,7 @@ export default function AnimeDetail() {
 
         const normalizedSeason = season.toLowerCase();
 
-        return seasonMap[normalizedSeason] || 'Không xác định';
+        return seasonMap[normalizedSeason] || '';
     };
 
     if (isSuccess) {
