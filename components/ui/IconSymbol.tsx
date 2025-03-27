@@ -14,8 +14,9 @@ const MAPPING = {
   'chevron.left.forwardslash.chevron.right': 'code',
   'chevron.right': 'chevron-right',
   'scope': 'search',
-  'list.bullet': 'category'
-} as Partial<
+  'list.bullet': 'category',
+  'arrow.up.square': 'isekai',
+} as unknown as Partial<
   Record<
     import('expo-symbols').SymbolViewProps['name'],
     React.ComponentProps<typeof MaterialIcons>['name']

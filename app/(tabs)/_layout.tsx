@@ -47,6 +47,13 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <IconSymbol size={28} name='list.bullet' color={color} />,
         }}
       />
+       <Tabs.Screen
+        name="isekai"
+        options={{
+          title: 'Isekai',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="arrow.up.square" color={color} />,
+        }}
+      />
       <Tabs.Screen
         name="explore"
         options={{
