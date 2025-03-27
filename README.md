@@ -1,4 +1,3 @@
-
 # 🎌 Welcome to L903 ANIME 👋
 
 L903 ANIME là ứng dụng Android được xây dựng với [Expo](https://expo.dev), giúp bạn cập nhật thông tin Anime từ [MyAnimeList](https://myanimelist.net/).
@@ -7,8 +6,10 @@ L903 ANIME là ứng dụng Android được xây dựng với [Expo](https://ex
 
 ## 📱 Screenshots
 
-![L903 ANIME Screenshot](https://github.com/user-attachments/assets/24a7adf3-38fd-4ccc-a841-1b68a2885546)
-![L903 ANIME Screenshot](https://github.com/user-attachments/assets/fe21d45f-19d9-48b1-b26a-5f094da8bc48)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/24a7adf3-38fd-4ccc-a841-1b68a2885546" width="45%" />
+  <img src="https://github.com/user-attachments/assets/fe21d45f-19d9-48b1-b26a-5f094da8bc48" width="45%" />
+</p>
 
 ---
 
@@ -26,5 +27,3 @@ L903 ANIME là ứng dụng Android được xây dựng với [Expo](https://ex
 ```sh
 git clone https://github.com/your-username/L903-ANIME.git
 cd L903-ANIME
-```
-
