@@ -44,7 +44,7 @@ export default function HomeScreen() {
               fetchNextPage();
             }
           }}
-          onEndReachedThreshold={0.1}
+          onEndReachedThreshold={0.9}
           style={styles.flatList}
           ListFooterComponent={
             isFetchingNextPage ? (

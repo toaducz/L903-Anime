@@ -62,17 +62,21 @@ type limit = {
   limit?:number
 }
 
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 export const useSeasonalAnimeNow = ({limit}: SeasonalRequest) => {
   return useInfiniteQuery({
     queryKey: ['use-seasonal-anime'],
-    queryFn: ({pageParam = 1}) =>
-      request<SeasonalAnimes>(`seasons/now`, 'GET',{
+    queryFn: async ({ pageParam = 1 }) => {
+      await delay(1000);
+      return request<SeasonalAnimes>('seasons/now', 'GET', {
         page: pageParam,
-        filter: "tv",
-        sfw: "",
-        order_by: "score", 
-        sort: "desc",
-      }),
+        filter: 'tv',
+        sfw: '',
+        order_by: 'score',
+        sort: 'desc',
+      });
+    },
     initialPageParam: 1,
     staleTime: 1000 * 60 * 60,
     refetchOnWindowFocus: false,
@@ -80,27 +84,32 @@ export const useSeasonalAnimeNow = ({limit}: SeasonalRequest) => {
   })
 }
 
-export const getSeasonalAnimeNow = ({limit}: limit) => {
+export const getSeasonalAnimeNow = ({ limit }: { limit: number }) => {
   return queryOptions({
     queryKey: ['get-seasonal-anime-now'],
-    queryFn: () =>
-      request<SeasonalAnimes>(`seasons/now`, 'GET', {
-        limit: limit
-      }),
-  })
-}
+    queryFn: async () => {
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      return request<SeasonalAnimes>(`seasons/now`, 'GET', { limit });
+    },
+    staleTime: 10000
+  });
+};
 
-export const getTopAnimeNow = ({limit}: limit) => {
+export const getTopAnimeNow = ({ limit }: { limit: number }) => {
   return queryOptions({
     queryKey: ['get-top-anime-now'],
-    queryFn: () =>
-      request<SeasonalAnimes>(`top/anime`, 'GET', {
+    queryFn: async () => {
+      await new Promise(resolve => setTimeout(resolve, 3000))
+      return request<SeasonalAnimes>(`top/anime`, 'GET', {
         limit: limit,
         type: "tv",
         sfw: "",
-      }),
-  })
-}
+      });
+    },
+    staleTime: 10000
+  });
+};
+
 
 
 export const useSeasonalAnime = ({ year, season, page }:SeasonalRequest) => {

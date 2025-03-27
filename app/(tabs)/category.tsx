@@ -9,6 +9,12 @@ import Loading from '@/components/loading/loading';
 import Error from '@/components/error';
 
 export default function CategoryScreen() {
+
+  const delayApiCall = async (apiFunc: () => Promise<any>) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000)); // Delay 1 giây
+    return apiFunc();
+  };
+  
   const router = useRouter();
   const [activeTab, setActiveTab] = useState(0);
   const { data: season, isLoading: seasonLoading } = useQuery(getSeasonalAnimeNow({ limit: 10 }));
