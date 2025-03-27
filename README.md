@@ -7,7 +7,7 @@ L903 ANIME là ứng dụng Android được xây dựng với [Expo](https://ex
 ## 📱 Screenshots
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/24a7adf3-38fd-4ccc-a841-1b68a2885546" width="48%" height="50%" />
+  <img src="https://github.com/user-attachments/assets/24a7adf3-38fd-4ccc-a841-1b68a2885546" width="48%" height="30%" />
   <img src="https://github.com/user-attachments/assets/fe21d45f-19d9-48b1-b26a-5f094da8bc48" width="48%" height="50%" />
 </p>
 
