@@ -52,24 +52,53 @@ type trailer = {
 }
 
 type SeasonalRequest = {
-    year: string
-    season: string
+    year?: string
+    season?: string
     page?: number
+    limit?: number
 }
 
-export const getSeasonalAnimeNow = () => {
+type limit = {
+  limit?:number
+}
+
+export const useSeasonalAnimeNow = ({limit}: SeasonalRequest) => {
   return useInfiniteQuery({
-    queryKey: ['get-seasonal-anime'],
+    queryKey: ['use-seasonal-anime'],
     queryFn: ({pageParam = 1}) =>
       request<SeasonalAnimes>(`seasons/now`, 'GET',{
         page: pageParam,
         filter: "tv",
-        sfw: ""
+        sfw: "",
+        order_by: "score", 
+        sort: "desc",
       }),
     initialPageParam: 1,
     staleTime: 1000 * 60 * 60,
     refetchOnWindowFocus: false,
     getNextPageParam: lastPage => (lastPage?.pagination.has_next_page ? lastPage?.pagination.current_page + 1 : null),
+  })
+}
+
+export const getSeasonalAnimeNow = ({limit}: limit) => {
+  return queryOptions({
+    queryKey: ['get-seasonal-anime-now'],
+    queryFn: () =>
+      request<SeasonalAnimes>(`seasons/now`, 'GET', {
+        limit: limit
+      }),
+  })
+}
+
+export const getTopAnimeNow = ({limit}: limit) => {
+  return queryOptions({
+    queryKey: ['get-top-anime-now'],
+    queryFn: () =>
+      request<SeasonalAnimes>(`top/anime`, 'GET', {
+        limit: limit,
+        type: "tv",
+        sfw: "",
+      }),
   })
 }
 
@@ -81,7 +110,9 @@ export const useSeasonalAnime = ({ year, season, page }:SeasonalRequest) => {
       request<SeasonalAnimes>(`seasons/${year}/${season}`, 'GET',{
         page: pageParam,
         filter: "tv",
-        sfw: ""
+        sfw: "",
+        order_by: "score", 
+        sort: "desc"
       }),
     initialPageParam: 1,
     staleTime: 1000 * 60 * 60,

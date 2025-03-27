@@ -38,6 +38,7 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
         <Stack.Screen name="anime-detail" options={{ title: 'Chi tiết Anime' }} />
+        <Stack.Screen name="anime-search-result" options={{ title: 'Kết quả tìm kiếm' }} />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>

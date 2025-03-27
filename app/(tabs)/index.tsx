@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Platform, Text, View, ActivityIndicator, FlatList } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedView } from '@/components/ThemedView';
-import { getSeasonalAnimeNow, useSeasonalAnime } from '@/API/getSeasonalAnime'
+import { useSeasonalAnimeNow, useSeasonalAnime } from '@/API/getSeasonalAnime'
 import { useEffect, useState, useCallback } from 'react';
 import AnimeItem from '@/components/anime/anime-item';
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -9,7 +9,7 @@ import { useRouter } from 'expo-router';
 
 export default function HomeScreen() {
    const router = useRouter()
-  const { data: season, isLoading, fetchNextPage, isFetchingNextPage, hasNextPage } = getSeasonalAnimeNow()
+  const { data: season, isLoading, fetchNextPage, isFetchingNextPage, hasNextPage } = useSeasonalAnimeNow({})
 
   if (isLoading) {
     return (

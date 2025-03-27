@@ -12,26 +12,29 @@ import Loading from '@/components/loading/loading';
 
 export default function TabTwoScreen() {
   const router = useRouter();
-  const { data: random, isLoading, refetch } = useQuery(getAnimeByRandom()) 
-  
+  const { data: random, isLoading, refetch } = useQuery(getAnimeByRandom())
+
   if (isLoading) {
     return (
-      <Loading/>
+      <Loading />
     );
   }
 
-  const handlePress = (id:string) => {
-    
+  const handlePress = (id: string) => {
+
     router.push({ pathname: '/anime-detail', params: { mal_id: id.toString() } });
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.guideText}>Không biết xem gì thì ấn vào đây</Text>
-      <TouchableOpacity style={styles.button} onPress={() =>{
-         handlePress(random?.data.mal_id || "")
-         refetch()
-         }}>
+      <Text style={styles.guideText}>
+        <Text style={styles.guideText}>Khả năng ra phim lỏ là</Text><Text style={{ fontWeight: 700 }}> 90%</Text>
+      </Text>
+      <TouchableOpacity style={styles.button} onPress={() => {
+        handlePress(random?.data.mal_id || "")
+        refetch()
+      }}>
         <Text style={styles.buttonText}>Press Me</Text>
       </TouchableOpacity>
     </View>

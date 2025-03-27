@@ -41,6 +41,13 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="category"
+        options={{
+          title: 'Danh mục',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name='list.bullet' color={color} />,
+        }}
+      />
+      <Tabs.Screen
         name="explore"
         options={{
           title: 'Khám phá',

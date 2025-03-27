@@ -13,7 +13,8 @@ const MAPPING = {
   'paperplane.fill': 'send',
   'chevron.left.forwardslash.chevron.right': 'code',
   'chevron.right': 'chevron-right',
-  'scope': 'search'
+  'scope': 'search',
+  'list.bullet': 'category'
 } as Partial<
   Record<
     import('expo-symbols').SymbolViewProps['name'],

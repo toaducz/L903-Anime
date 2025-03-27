@@ -1,12 +1,9 @@
-import React, { useEffect } from 'react';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedView } from '@/components/ThemedView';
+import React  from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { useLocalSearchParams } from 'expo-router'; // Hook để lấy params trong expo-router
+import { useLocalSearchParams } from 'expo-router';
 import { getAnimeById } from '@/API/getAnimeDetail';
 import Loading from '@/components/loading/loading';
-import { WebView } from "react-native-webview";
 import CustomParallaxScrollView from '@/components/CustomParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { Collapsible } from '@/components/Collapsible';
@@ -89,15 +86,15 @@ export default function AnimeDetail() {
                 <Collapsible title="Hình ảnh">
                     <Image
                         source={{ uri: anime?.data.images.jpg.large_image_url }}
+                        style={[styles.image]}
                         resizeMode="cover"
-
                     >
                     </Image>
                 </Collapsible>
                 {/* <Text style={[styles.subTitle]}>Nội dung:</Text>
                 <Text style={{ paddingBottom: 20 }}>{anime?.data.synopsis ?? "Quá lỏ nên tạm chưa có nội dung"}</Text> */}
             </View>
-            <View style={{ paddingBottom: 200 }}></View>
+            <View style={{ paddingBottom: 100 }}></View>
         </CustomParallaxScrollView >
     );
 }
@@ -152,4 +149,10 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 4,
     },
+    image: {
+        width: '100%',
+        height: 500,
+        borderRadius: 8,
+        backgroundColor: '#e0e0e0',
+      },
 });

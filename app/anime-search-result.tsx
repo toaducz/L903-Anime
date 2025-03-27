@@ -1,52 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ActivityIndicator, FlatList, View, TextInput, Text, Button } from 'react-native';
+import { StyleSheet, ActivityIndicator, FlatList, View, TextInput, Text } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { useSeasonalAnime } from '@/API/getSeasonalAnime';
+import { useLocalSearchParams } from 'expo-router';
 import AnimeItem from '@/components/anime/anime-item';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from 'expo-router';
 import Loading from '@/components/loading/loading';
+import { useSearchAnime } from '@/API/getAnimeSearch';
 
-export default function SearchScreen() {
+export default function SearchResultScreen() {
     const router = useRouter()
-    const d = new Date()
-    const seasons = {
-        winter: ["January", "February", "March"],
-        spring: ["April", "May", "June"],
-        summer: ["July", "August", "September"],
-        fall: ["October", "November", "December"],
-    };
-    const [searchQuery, setSearchQuery] = useState('');
-    const [selectedYear, setSelectedYear] = useState(d.getFullYear());
-    const [selectedSeason, setSelectedSeason] = useState('winter');
+    const { query } = useLocalSearchParams();
 
-    useEffect(() => {
-        const monthNames = Object.keys(seasons);
-        const currentMonth = new Date().toLocaleString("en-US", { month: "long" });
+    const [orderBy, setOrderBy] = useState("score")
+    const [sort, setSort] = useState("desc")
 
-        const season = monthNames.find((season) =>
-            seasons[season as keyof typeof seasons].includes(currentMonth)
-        );
+    // console.log(query)
 
-        if (season) {
-            setSelectedSeason(season);
-        }
-    }, []);
-
-
-    const { data: season, isLoading, fetchNextPage, isFetchingNextPage, hasNextPage, isSuccess } = useSeasonalAnime({
-        year: String(selectedYear),
-        season: selectedSeason,
+    const { data: result, isLoading, fetchNextPage, isFetchingNextPage, hasNextPage } = useSearchAnime({
+        q: String(query), sort: sort, order_by: orderBy
     });
-
-    const handleSearch = () => {
-        if (searchQuery.trim()) {
-            router.push({
-                pathname: '/anime-search-result',
-                params: { query: searchQuery },
-            });
-        }
-    };
 
     if (isLoading) {
         return (
@@ -55,51 +28,41 @@ export default function SearchScreen() {
     }
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: "#121212" }}>
+        <View style={{ flex: 1, backgroundColor: "#white", paddingVertical:25 }}>
             <View style={styles.container}>
-                {/* Thanh SearchBar */}
-                <TextInput
-                    style={styles.searchBar}
-                    placeholder="Tìm kiếm anime..."
-                    value={searchQuery}
-                    onChangeText={setSearchQuery}
-                    onSubmitEditing={handleSearch} 
-                    returnKeyType="search"
-                />
-                {/* Selector cho năm và mùa */}
                 <View style={styles.selectorContainer}>
                     <View style={styles.pickerWrapper}>
-                        <Text style={styles.label}>Năm:</Text>
+                        <Text style={styles.label}>Filter:</Text>
                         <Picker
-                            selectedValue={selectedYear}
-                            onValueChange={(itemValue) => setSelectedYear(itemValue)}
+                            selectedValue={orderBy}
+                            onValueChange={(itemValue) => setOrderBy(itemValue)}
                             style={styles.picker}
                         >
-                            {Array.from(
-                                { length: new Date().getFullYear() + 1 - 1996 + 1 },
-                                (_, i) => new Date().getFullYear() + 1 - i
-                            ).map((year) => (
-                                <Picker.Item key={year} label={`${year}`} value={year} />
-                            ))}
+                            <Picker.Item label="Mặc định" value="mal_id" />
+                            <Picker.Item label="Tựa đề" value="title" />
+                            <Picker.Item label="Chiếu gần nhất" value="start_date" />
+                            <Picker.Item label="Chiếu xa nhất" value="end_date" />
+                            <Picker.Item label="Mặc định" value="mal_id" />
+                            <Picker.Item label="Tựa đề" value="title" />
+                            <Picker.Item label="Số tập" value="episodes" />
+                            <Picker.Item label="Điểm" value="score" />
                         </Picker>
                     </View>
                     <View style={styles.pickerWrapper}>
-                        <Text style={styles.label}>Mùa:</Text>
+                        <Text style={styles.label}>Xếp theo:</Text>
                         <Picker
-                            selectedValue={selectedSeason}
-                            onValueChange={(itemValue) => setSelectedSeason(itemValue)}
+                            selectedValue={sort}
+                            onValueChange={(itemValue) => setSort(itemValue)}
                             style={styles.picker}
                         >
-                            <Picker.Item label="Xuân" value="spring" />
-                            <Picker.Item label="Hè" value="summer" />
-                            <Picker.Item label="Thu" value="fall" />
-                            <Picker.Item label="Đông" value="winter" />
+                            <Picker.Item label="Giảm dần" value="desc" />
+                            <Picker.Item label="Tăng dần" value="asc" />
                         </Picker>
                     </View>
                 </View>
-                {season?.pages[0]?.data.length === 0 || season?.pages[0]?.data === undefined ? (<View><Text style={[styles.horizontal, styles.selectorContainer, styles.title]}>Không có kết quả!</Text></View>) : (<FlatList
+                {result?.pages[0]?.data.length === 0 || result?.pages[0]?.data === undefined ? (<View><Text style={[styles.horizontal, styles.selectorContainer, styles.title]}>Không có kết quả!</Text></View>) : (<FlatList
                     endFillColor={'default'}
-                    data={season?.pages.flatMap((page) => page?.data)}
+                    data={result?.pages.flatMap((page) => page?.data)}
                     numColumns={2}
                     renderItem={({ item }) => <AnimeItem season={item!} onPress={() => router.push({ pathname: '/anime-detail', params: { mal_id: item?.mal_id } })} />}
                     keyExtractor={(item) => item!.mal_id}
@@ -119,9 +82,10 @@ export default function SearchScreen() {
                 />)
 
                 }
+                <View style={{ paddingBottom:100 }}></View>
 
             </View>
-        </SafeAreaView>
+        </View>
     );
 }
 
