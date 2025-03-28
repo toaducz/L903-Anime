@@ -129,3 +129,21 @@ export const useSeasonalAnime = ({ year, season, page }:SeasonalRequest) => {
     getNextPageParam: lastPage => (lastPage?.pagination.has_next_page ? lastPage?.pagination.current_page + 1 : null),
   })
 }
+
+export const useSeasonalUpcoming = () => {
+  return useInfiniteQuery({
+    queryKey: ['use-seasonal-anime-upcoming'],
+    queryFn: ({pageParam = 1}) =>
+      request<SeasonalAnimes>(`seasons/upcoming`, 'GET',{
+        page: pageParam,
+        filter: "tv",
+        sfw: "",
+        order_by: "score", 
+        sort: "desc"
+      }),
+    initialPageParam: 1,
+    staleTime: 1000 * 60 * 60,
+    refetchOnWindowFocus: false,
+    getNextPageParam: lastPage => (lastPage?.pagination.has_next_page ? lastPage?.pagination.current_page + 1 : null),
+  })
+}
