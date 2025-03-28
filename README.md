@@ -7,11 +7,11 @@ L903 ANIME là ứng dụng Android được xây dựng với [Expo](https://ex
 ## 📱 Screenshots
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/24a7adf3-38fd-4ccc-a841-1b68a2885546" width="48%" height="30%" />
-  <img src="https://github.com/user-attachments/assets/fe21d45f-19d9-48b1-b26a-5f094da8bc48" width="48%" height="50%" />
+  <img src="https://github.com/user-attachments/assets/0c7f6d75-bd31-44f1-b678-cd94a1eac571" width="48%" height="30%" />
+  <img src="https://github.com/user-attachments/assets/0460a37f-b933-4ebd-a29a-4124938b1789" width="48%" height="50%" />
+  <img src="https://github.com/user-attachments/assets/67a8e2a6-30de-40d5-a93c-f1d1640e08fa" width="48%" height="50%" />
+  <img src="https://github.com/user-attachments/assets/85ed09fb-956c-499a-80e3-a64389679a69" width="48%" height="50%" />
 </p>
-
----
 
 ## 🚀 Features
 ✅ Cập nhật danh sách Anime mới nhất từ MyAnimeList  
