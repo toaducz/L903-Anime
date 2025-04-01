@@ -14,16 +14,19 @@ L903 ANIME là ứng dụng Android được xây dựng với [Expo](https://ex
 </p>
 
 ## 🚀 Features
+
 ✅ Cập nhật danh sách Anime mới nhất từ MyAnimeList  
 ✅ Xem thông tin chi tiết về từng bộ Anime  
 ✅ Giao diện đơn giản, dễ sử dụng  
-✅ Tìm kiếm nhanh chóng  
+✅ Tìm kiếm nhanh chóng
 
 ---
 
 ## 🛠 Installation
 
 ### 1️⃣ Clone Repository
+
 ```sh
 git clone https://github.com/your-username/L903-ANIME.git
 cd L903-ANIME
+```

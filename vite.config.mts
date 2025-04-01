@@ -22,8 +22,6 @@ export default () => {
         enums: path.resolve(__dirname, './enums')
       }
     },
-    plugins: [
-      tailwindcss(),
-    ],
+    plugins: [tailwindcss()]
   })
 }

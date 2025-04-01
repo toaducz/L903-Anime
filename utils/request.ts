@@ -1,5 +1,5 @@
 type MethodType = 'POST' | 'GET'
-type HeaderType = { [key: string]: any }    
+type HeaderType = { [key: string]: any }
 
 export async function request<T, P = any>(
   endpoint: string,
@@ -7,7 +7,6 @@ export async function request<T, P = any>(
   payload?: P,
   headers: HeaderType = {}
 ): Promise<T | null> {
-
   const options: RequestInit = {
     // method,
     // credentials: 'include',
@@ -27,7 +26,7 @@ export async function request<T, P = any>(
       params = `?${new URLSearchParams(payload).toString()}`
     }
   }
-  const API_URL = "https://api.jikan.moe/v4"
+  const API_URL = 'https://api.jikan.moe/v4'
   const response = await fetch(`${API_URL}/${endpoint}${params}`, options)
   try {
     return (await response.json()) as T
