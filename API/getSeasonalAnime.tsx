@@ -66,7 +66,7 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 export const useSeasonalAnimeNow = ({ limit }: SeasonalRequest) => {
   return useInfiniteQuery({
-    queryKey: ['use-seasonal-anime'],
+    queryKey: ['use-seasonal-anime-now'],
     queryFn: async ({ pageParam = 1 }) => {
       await delay(1000)
       return request<SeasonalAnimes>('seasons/now', 'GET', {
