@@ -5,7 +5,8 @@ export async function request<T, P = any>(
   endpoint: string,
   method: MethodType = 'GET',
   payload?: P,
-  headers: HeaderType = {}
+  headers: HeaderType = {},
+  url?:string
 ): Promise<T | null> {
   const options: RequestInit = {
     // method,
@@ -27,7 +28,7 @@ export async function request<T, P = any>(
     }
   }
   const API_URL = 'https://api.jikan.moe/v4'
-  const response = await fetch(`${API_URL}/${endpoint}${params}`, options)
+  const response = await fetch(`${url ? url : API_URL}/${endpoint}${params}`, options)
   try {
     return (await response.json()) as T
   } catch (error) {
