@@ -11,7 +11,7 @@ export async function request<T, P = any>(
   const options: RequestInit = {
     // method,
     // credentials: 'include',
-    mode: 'no-cors',
+    // mode: 'no-cors',
     headers: {
       'Content-Type': 'application/json',
       accept: '*/*',
