@@ -9,14 +9,15 @@ export type Text = {
 export const getTranslate = (text: string) => {
     return queryOptions({
         queryKey: ['get-translate'],
-        queryFn: () => request<Text>(`https://libretranslate.com/translate`, 'GET', {
+        queryFn: () => request<Text>("", 'GET', {
             q: text,
             source: "en",
             target: "vi",
             format: "text",
             alternatives: 3,
             api_key: ""
-        }),
+        },
+            `https://libretranslate.com/translate`),
         staleTime: 36000
     })
 }

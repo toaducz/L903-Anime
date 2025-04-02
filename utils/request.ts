@@ -5,13 +5,13 @@ export async function request<T, P = any>(
   endpoint: string,
   method: MethodType = 'GET',
   payload?: P,
+  url?:string,
   headers: HeaderType = {},
-  url?:string
 ): Promise<T | null> {
   const options: RequestInit = {
     // method,
     // credentials: 'include',
-    // mode: 'cors',
+    mode: 'no-cors',
     headers: {
       'Content-Type': 'application/json',
       accept: '*/*',
